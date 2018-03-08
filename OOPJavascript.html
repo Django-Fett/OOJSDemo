@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			var Person = function(name) {
+	
+				// (O_O) PRIVATE static variable accessible amongst all object instances via memoization
+				var speciesClass = "Homo Sapien";
+			
+				Person = function(name) {
+					this.name = name;
+				};
+			
+				Person.prototype = {
+					getSpecies : function() {
+						return speciesClass;
+					},
+					alterSpecies : function() {
+						speciesClass = "Homo Superior";
+					},
+					name : "",
+					quote : "I'm here to make REAL change in society :D",
+					speech : function() {
+						alert("Hello!!! My name is " + this.name + " " + this.quote)
+					}
+				};
+			
+				return new Person(name);
+			};
+			
+			// Fire canned Person speech and alert species of person
+			var test = new Person("Dan");
+			test.speech();
+			alert(test.getSpecies());
+			
+			// Fire canned Person speech with different name for new object
+			var test3 = new Person("Jobe");
+			test3.speech();
+			alert(test3.getSpecies());
+			
+			// Alter PRIVATE static member
+			test3.alterSpecies();
+			
+			// Check ALL instances of Person to see if the new value is indeed present in both
+			alert(test3.getSpecies());
+			alert(test.getSpecies());
+			
+			// Derive Politician class from Person
+			var Politician = function(name) {
+				Politician = function(name) {
+					Person.call(this, name);
+					// Call to "super()"
+					this.quote = "I'm here to make as much money as possible :D";
+				};
+			
+				Politician.prototype = new Person;
+			
+				return new Politician(name);
+			};
+			
+			var test2 = new Politician("Barack");
+			test2.speech();
+			
+			// Alter base class (Person) to have a new method, but execute it in the derived (Politician) class
+			Person.prototype.shock = function() {
+				alert("Pop off!");
+			};
+			test2.shock(); 
+		</script>
+	</head>
+	<body>
+
+	</body>
+</html>
